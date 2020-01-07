@@ -41,10 +41,15 @@ def SolveGravityAssist(initialMemory, goal):
 def wireIntersection(wirepath):
     wiredelta = [wireDelta(wire) for wire in wirepath]
     wireCord = [calcCord(wire) for wire in wiredelta]
+    intersections = []
     #we now have coordinates for the lines
     for index,wireOneCord in enumerate(wireCord[0][1:]):
-        for index,wireTwoCord in enumerate(wireCord[1][1:]):
-
+        Segment1 = {(wireCord[0][index - 1], wireCord[0][index - 1]), (wireOneCord[0], wireOneCord[1])}
+        for i,wireTwoCord in enumerate(wireCord[1][1:]):
+            Segment2 = {(wireCord[1][i - 1], wireCord[1][i - 1]), (wireTwoCord[0], wireTwoCord[1])}
+            if (max(Segment1[0][0],Segment1[1][0]) < min(Segment2[0][0],Segment2[1][0])):
+                continue
+            
 
 def wireDelta(wire):
     for index,wirestep in enumerate(wire):
