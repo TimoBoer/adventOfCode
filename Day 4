@@ -1,0 +1,36 @@
+def PaswordCounter(range):
+    lowerbound = [int(val) for val in range[:6]]
+    allowed = 0
+    intupperbound = int(range[-6:])
+    intlowerbound = int(range[:6])
+
+    while intlowerbound < intupperbound:
+        if decreasing(lowerbound) and double(lowerbound):
+            allowed += 1
+        intlowerbound += 1
+        lowerbound = [int(x) for x in str(intlowerbound)]
+    return allowed
+
+def decreasing(attempt):
+    if any(attempt[i] > attempt[i + 1] for i in range(5)):
+        return False
+    return True
+
+def double(attempt):
+    result = False
+    count = 1
+    for index in range(len(attempt) - 1):
+        if attempt[index] == attempt[index + 1]:
+            count += 1
+            if count == 2:
+                result = True
+            elif count > 2:
+                result = False
+        else:
+            count = 1
+            if result:
+                return result
+    return result
+ 
+
+print(PaswordCounter("271973-785961"))
