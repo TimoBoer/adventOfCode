@@ -1,5 +1,6 @@
-def IntcodeComputer(intcode):
+def IntcodeComputer(intcode, inputs):
     i = 0
+    results = []
     while intcode[i] != 99:
         opcode = int(str(intcode[i])[-2:])
         parameters = str(intcode[i])[:-2]
@@ -8,13 +9,13 @@ def IntcodeComputer(intcode):
         elif opcode == 2:
             i = calc(i, parameters, intcode, "multi")
         elif opcode == 3:
-            intcode[intcode[i + 1]] = int(input())
+            intcode[intcode[i + 1]] = inputs.pop(0)
             i = i + 2
         elif opcode == 4:
             if parameters == "1":
-                print(intcode[i + 1])
+                results.append(intcode[i + 1])
             else:
-                print(intcode[intcode[i + 1]])
+                results.append(intcode[intcode[i + 1]])
             i = i + 2
         elif opcode == 5:
             i = jump(i, parameters, intcode, "true")
@@ -28,7 +29,7 @@ def IntcodeComputer(intcode):
             print("an unexpected integer was encountered at:" , i, "namely:",intcode[i])
             return 0
 
-    return intcode
+    return results
 
 
 #handles opcode 1 and 2 for adding and multiplication
@@ -101,7 +102,7 @@ def equal(index, parameters, intcode, version):
     return index + 4
 
 
-text_file = open("input05.txt", "r")
-initialMemory = [int(val) for val in text_file.read().split(",")]
-IntcodeComputer(initialMemory)
-
+def day5(file, inputs):
+    text_file = open(file, "r")
+    initialMemory = [int(val) for val in text_file.read().split(",")]
+    return IntcodeComputer(initialMemory, inputs)
